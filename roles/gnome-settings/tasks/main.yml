@@ -1,0 +1,72 @@
+---
+- name: Copy wallpaper to home
+  copy:
+    src: firefox-hero-big.jpg
+    dest: "{{ ansible_env.HOME }}/.wallpaper.jpg"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0640
+
+- name: Set wallpaper
+  dconf:
+    key: /org/gnome/desktop/background/picture-uri
+    value: "'file://{{ ansible_env.HOME }}/.wallpaper.jpg'"
+
+- name: Set user profile picture
+  get_url:
+    url: "https://www.gravatar.com/avatar/{{ system_user_email | hash('md5') }}?s=192"
+    dest: "{{ ansible_env.HOME }}/.face"
+
+- name: Set automatic login
+  blockinfile:
+    path: /etc/gdm/custom.conf
+    insertafter: "^\\[daemon\\]$"
+    block: |
+      AutomaticLoginEnable=True
+      AutomaticLogin={{ system_user }}
+  become: yes
+
+- name: Lock screen when lid is closed
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    regexp: "^HandleLidSwitch="
+    line: "HandleLidSwitch=lock"
+    insertafter: "^#HandleLidSwitch="
+  become: yes
+  notify: "lock screen message"
+
+- name: Enable night light (red shift)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+
+- name: Set touchpad tap as click
+  dconf:
+    key: /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click
+    value: "true"
+  notify: "touchpad change message"
+
+- name: Set dash favourite applications
+  dconf:
+    key: /org/gnome/shell/favorite-apps
+    value: "['nightly.desktop', 'org.gnome.Nautilus.desktop', 'com.gexperts.Tilix.desktop']"
+
+- name: Nautilus - default view as list
+  dconf:
+    key: /org/gnome/nautilus/preferences/default-folder-viewer
+    value: "'list-view'"
+
+- name: Nautilus - open folders in place (tree view)
+  dconf:
+    key: /org/gnome/nautilus/list-view/use-tree-view
+    value: "true"
+
+- name: Nautilus - sort folders before files
+  dconf:
+    key: /org/gtk/settings/file-chooser/sort-directories-first
+    value: "true"
+
+- name: Disable GNOME extensions
+  dconf:
+    key: /org/gnome/shell/disable-user-extensions
+    value: "true"

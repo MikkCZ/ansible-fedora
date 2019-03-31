@@ -1,0 +1,4 @@
+---
+- name: shell change message
+  debug:
+    msg: "After the playbook is finished, LOGOUT and LOGIN again for the shell change to be applied."

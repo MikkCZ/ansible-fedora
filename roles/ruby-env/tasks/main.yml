@@ -1,0 +1,26 @@
+---
+- name: Install Ruby, Bundler, RubyGems and Ruby development libraries
+  dnf:
+    name:
+      - ruby
+      - rubygem-bundler
+      - rubygems
+      - ruby-devel
+    state: present
+  become: yes
+
+- name: Install GCC
+  dnf:
+    name:
+      - gcc
+      - gcc-c++
+    state: present
+  become: yes
+
+- name: Install development files
+  dnf:
+    name:
+      - openssl-devel
+      - redhat-rpm-config
+    state: present
+  become: yes

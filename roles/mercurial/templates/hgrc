@@ -1,0 +1,38 @@
+[ui]
+username = {{ system_user_full_name }} <mstanke@mozilla.cz>
+interface = curses
+
+[defaults]
+qnew = -Ue
+
+[diff]
+git = 1
+showfunc = 1
+unified = 8
+
+[pager]
+pager = LESS='FRX' less
+attend-help = true
+attend-incoming = true
+attend-outgoing = true
+attend-status = true
+attend-wip = true
+
+[extensions]
+mq =
+#color =
+#pager =
+#histedit =
+#rebase =
+#blackbox =
+
+[alias]
+shortlog = log --template "{node|short} | {date|isodatesec} | {author|user}: {desc|strip|firstline}\n"
+wip = log --graph --rev=wip --template=wip
+
+[templates]
+wip = '{label("log.branch", branches)} {label("changeset.{phase}", rev)}{label("changeset.{phase}", ":")}{label("changeset.{phase}", short(node))} {label("grep.user", author|user)}{label("log.tag", if(tags," {tags}"))}{label("log.tag", if(fxheads," {fxheads}"))} {label("log.bookmark", if(bookmarks," {bookmarks}"))}\n{label(ifcontains(rev, revset("."), "desc.here"),desc|firstline)}'
+
+[tortoisehg]
+ui.language = en
+editor = gedit

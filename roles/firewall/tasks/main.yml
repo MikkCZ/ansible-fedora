@@ -1,0 +1,16 @@
+---
+- name: Block all incoming - IPv4
+  firewalld:
+    rich_rule: 'rule family=ipv4 source address=0.0.0.0/0 drop'
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes
+
+- name: Block all incoming - IPv6
+  firewalld:
+    rich_rule: 'rule family=ipv6 source address=::/0 drop'
+    permanent: yes
+    immediate: yes
+    state: enabled
+  become: yes

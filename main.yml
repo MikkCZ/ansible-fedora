@@ -1,0 +1,46 @@
+---
+- name: "Setup my Fedora"
+  hosts: localhost
+  connection: local
+  vars:
+    system_user: michal
+    system_user_full_name: Michal Stanke
+    system_user_email: michal@stanke.cz
+    system_user_gpg_key: E0079E8F
+    fedora_version: 29
+    locale: cs
+
+  pre_tasks:
+    - name: Install ansible-lint
+      dnf:
+        name: python3-ansible-lint
+        state: present
+      become: yes
+
+    - name: Run ansible-lint
+      command: ansible-lint main.yml
+      args:
+        creates: nothing # noqa 301
+
+    # dconf module dependency, see https://docs.ansible.com/ansible/latest/modules/dconf_module.html#notes
+    - name: Install Python psutil
+      dnf:
+        name: python3-psutil
+        state: present
+      become: yes
+
+  roles:
+    - git
+    - mercurial
+    - python-env
+    - ruby-env
+    - java-env
+    - oh-my-zsh
+    - terminal
+    - firewall
+#    - flatpak-apps
+#    - snap-apps
+    - repo-apps
+    - custom-apps
+    - gnome-settings
+    - print

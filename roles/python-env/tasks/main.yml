@@ -1,0 +1,24 @@
+---
+- name: Install Python development libraries
+  dnf:
+    name:
+      - python3-devel
+      - libffi-devel # required for Python builds (e.g. with pyenv)
+    state: present
+  become: yes
+
+# https://github.com/pyenv/pyenv-installer
+- name: Install pyenv
+  shell: |
+    set -o pipefail
+    curl https://pyenv.run | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.pyenv/"
+
+#- name: Install Python 3.7.2
+#  command: pyenv install 3.7.2
+#  args:
+#    creates: "{{ ansible_env.HOME }}/.pyenv/versions/3.7.2/"
+#
+#- name: Use Python 3.7.2 # noqa 301
+#  command: pyenv global 3.7.2

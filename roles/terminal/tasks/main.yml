@@ -1,0 +1,77 @@
+---
+- name: Install cli tools - vim, htop, xclip, thefuck
+  dnf:
+    name:
+      - vim
+      - htop
+      - xclip
+      - thefuck
+    state: present
+  become: yes
+
+- name: Install Tilix
+  dnf:
+    name: tilix
+    state: present
+  become: yes
+
+- name: Uninstall GNOME Terminal
+  dnf:
+    name: gnome-terminal
+    state: absent
+  become: yes
+
+- name: Ensure single Tilix instance only
+  dconf:
+    key: /com/gexperts/Tilix/new-instance-mode
+    value: "'focus-window'"
+
+- name: Set Tilix dark theme
+  dconf:
+    key: /com/gexperts/Tilix/theme-variant
+    value: "'dark'"
+
+- name: Set Tilix to use tabs
+  dconf:
+    key: /com/gexperts/Tilix/use-tabs
+    value: "true"
+
+- name: Set Tilix to hide title for single tile
+  dconf:
+    key: /com/gexperts/Tilix/terminal-title-show-when-single
+    value: "false"
+
+- name: Set Tilix wide separators
+  dconf:
+    key: /com/gexperts/Tilix/enable-wide-handle
+    value: "true"
+
+- name: Set Tilix as default temrinal
+  dconf:
+    key: /org/gnome/desktop/applications/terminal/exec
+    value: "'tilix'"
+
+- name: Set Tilix default terminal to open in full screen
+  dconf:
+    key: /org/gnome/desktop/applications/terminal/exec-arg
+    value: "'--maximize'"
+
+- name: Set Tilix to open with Ctrl+Alt+T (prepare)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+
+- name: Set Tilix to open with Ctrl+Alt+T (name)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
+    value: "'Tilix'"
+
+- name: Set Tilix to open with Ctrl+Alt+T (command)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
+    value: "'tilix --maximize'"
+
+- name: Set Tilix to open with Ctrl+Alt+T (binding)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
+    value: "'<Primary><Alt>t'"

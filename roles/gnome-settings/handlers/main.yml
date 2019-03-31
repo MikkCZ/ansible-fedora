@@ -1,0 +1,8 @@
+---
+- name: lock screen message
+  debug:
+    msg: "After the playbook is finished, RESTART the laptop for the lid close action to be applied."
+
+- name: touchpad change message
+  debug:
+    msg: "After the playbook is finished, LOGOUT and LOGIN again for the touchpad settings to be applied."

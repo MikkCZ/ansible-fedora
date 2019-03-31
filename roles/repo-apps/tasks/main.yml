@@ -1,0 +1,37 @@
+---
+- name: Uninstall unused apps - Evolution, Cheese, GNOME Contacts, Documents and Maps, Rhytmbox, Simple Scan
+  dnf:
+    name:
+      - evolution
+      - cheese
+      - gnome-contacts
+      - gnome-documents
+      - gnome-maps
+      - rhythmbox
+      - simple-scan
+    state: absent
+  become: yes
+
+- name: Install RPM Fusion free
+  dnf:
+    name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm"
+    state: present
+  become: yes
+
+- name: Install media codecs
+  dnf:
+    name:
+      - ffmpeg # for Firefox
+      - gstreamer
+      - gstreamer-ffmpeg
+      - gstreamer1-plugin-openh264
+      - openh264
+      - gstreamer1-libav
+    state: present
+  become: yes
+
+- name: Install Deja Dup
+  dnf:
+    name: deja-dup
+    state: present
+  become: yes

@@ -1,0 +1,36 @@
+---
+- name: Add the flathub flatpak repository remote to the user installation
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+#- name: Install Telegram and Slack
+#  flatpak:
+#    name:
+#      - org.telegram.desktop
+#      - com.slack.Slack
+#    state: present
+#    remote: flathub
+#    method: user
+
+- name: Install GNOME Boxes in Flatpak
+  flatpak:
+    name: org.gnome.Boxes
+    state: present
+    remote: flathub
+    method: user
+
+- name: Uninstall GNOME Boxes from distro repository
+  dnf:
+    name: gnome-boxes
+    state: absent
+  become: yes
+
+- name: Install GIMP in Flatpak
+  flatpak:
+    name: org.gimp.GIMP
+    state: present
+    remote: flathub
+    method: user

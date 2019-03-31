@@ -1,0 +1,41 @@
+---
+- name: Install ZSH
+  dnf:
+    name: zsh
+    state: present
+  become: yes
+
+- name: Set ZSH as default shell
+  user:
+    name: "{{ system_user }}"
+    shell: /usr/bin/zsh
+  become: yes
+  notify: "shell change message"
+
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/README.md
+- name: Install Oh My Zsh
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh/"
+
+# https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+- name: Install zsh-autosuggestions plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+    version: master
+
+# https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+- name: Install zsh-syntax-highlighting plugin
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+    version: master
+
+- name: Create ZSH configuration file
+  template:
+    src: .zshrc
+    dest: "{{ ansible_env.HOME }}"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0600

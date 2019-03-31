@@ -1,0 +1,45 @@
+---
+- name: Create Firefox Nightly installation directory
+  file:
+    path: /opt/firefox/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: "0755"
+  become: yes
+
+- name: Extract Firefox Nightly tarball to installation directory
+  unarchive:
+    src: "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang={{ locale }}"
+    dest: /opt/firefox/
+    copy: no
+    creates: /opt/firefox/firefox
+
+- name: Prepare Nightly logo for shortcut
+  copy:
+    src: firefox-logo-nightly.svg
+    dest: /opt/firefox/
+
+- name: Create shortcut for Firefox Nightly
+  copy:
+    src: nightly.desktop
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+
+- name: Uninstall Firefox from distro repository
+  dnf:
+    name: firefox
+    state: absent
+  become: yes
+
+- name: mozregression
+  pip:
+    name: mozregression
+    state: present
+    executable: pip2
+    extra_args: --user
+
+- name: Atom
+  dnf:
+    name: "https://atom-installer.github.com/v1.34.0/atom.x86_64.rpm"
+    state: present
+  become: yes

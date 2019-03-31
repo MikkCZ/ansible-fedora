@@ -1,0 +1,8 @@
+---
+- name: printer install instructions
+  debug:
+    msg: "The printer driver needs to be installed MANUALLY. Please open `http://localhost:631/` to open CUPS web interface and add it manually."
+
+- name: samsung driver install instructions
+  debug:
+    msg: "The printer driver needs to be installed MANUALLY. Please run `sudo ~/Downloads/uld/install.sh` and follow the script wizard."

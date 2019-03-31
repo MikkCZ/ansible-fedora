@@ -1,0 +1,14 @@
+---
+- name: Install mercurial
+  dnf:
+    name: mercurial
+    state: present
+  become: yes
+
+- name: Create global mercurial configuration file
+  template:
+    src: hgrc
+    dest: "{{ ansible_env.HOME }}/.hgrc"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0600
