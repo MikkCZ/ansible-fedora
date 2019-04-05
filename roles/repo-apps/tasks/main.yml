@@ -1,9 +1,10 @@
 ---
-- name: Uninstall unused apps - Evolution, Cheese, GNOME Contacts, Documents and Maps, Rhytmbox, Simple Scan
+- name: Uninstall unused GNOME apps, Evolution, Cheese, Rhytmbox and Simple Scan
   dnf:
     name:
       - evolution
       - cheese
+      - gnome-boxes
       - gnome-contacts
       - gnome-documents
       - gnome-maps
@@ -33,5 +34,23 @@
 - name: Install Deja Dup
   dnf:
     name: deja-dup
+    state: present
+  become: yes
+
+# https://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+- name: Add VirtualBox repository
+  yum_repository:
+    name: virtualbox
+    description: Fedora - VirtualBox
+    baseurl: https://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
+    gpgcheck: yes
+    repo_gpgcheck: yes
+    gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
+    state: present
+  become: yes
+
+- name: Install VirtualBox
+  dnf:
+    name: VirtualBox
     state: present
   become: yes
