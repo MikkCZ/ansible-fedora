@@ -15,6 +15,19 @@
 #    remote: flathub
 #    method: user
 
+- name: Install GNOME Boxes in Flatpak
+  flatpak:
+    name: org.gnome.Boxes
+    state: present
+    remote: flathub
+    method: user
+
+- name: Uninstall GNOME Boxes from distro repository
+  dnf:
+    name: gnome-boxes
+    state: absent
+  become: yes
+
 - name: Install GIMP in Flatpak
   flatpak:
     name: org.gimp.GIMP
