@@ -36,28 +36,3 @@
     state: present
   become: yes
 
-# https://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
-# Cleanup
-- name: Remove VirtualBox repository
-  yum_repository:
-    name: virtualbox
-    description: Fedora - VirtualBox
-    baseurl: https://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
-    gpgcheck: yes
-    repo_gpgcheck: yes
-    gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
-    state: absent
-  become: yes
-
-# Cleanup
-- name: Uninstall VirtualBox
-  dnf:
-    name:
-      - VirtualBox
-      - VirtualBox-kmodsrc
-      - VirtualBox-server
-      - akmod-VirtualBox
-      - kmod-VirtualBox
-      - virtualbox-guest-additions
-    state: absent
-  become: yes
