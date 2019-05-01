@@ -4,6 +4,7 @@
     name:
       - vim
       - htop
+      - sshfs
       - xclip
       - thefuck
     state: present
