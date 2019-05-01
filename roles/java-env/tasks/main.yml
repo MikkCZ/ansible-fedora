@@ -1,6 +1,56 @@
 ---
-- name: Install Maven
+- name: Install OpenJDKs and Maven
   dnf:
-    name: maven
+    name:
+      - java-1.8.0-openjdk
+      - java-1.8.0-openjdk-devel
+      - java-11-openjdk
+      - java-11-openjdk-devel
+      - maven
     state: present
+  become: yes
+
+- name: Get OpenJDK 1.8 package info
+  command: sh -c "LC_ALL=C dnf info java-1.8.0-openjdk --installed"
+  register: jdk_package_info
+  args:
+    creates: nothing # noqa 301
+
+- name: Get OpenJDK package name
+  shell: echo "{{ jdk_package_info.stdout }}" | grep 'Name' | awk '{print $NF}'
+  register: jdk_package_name
+  args:
+    creates: nothing # noqa 301
+
+- name: Get OpenJDK package version
+  shell: echo "{{ jdk_package_info.stdout }}" | grep 'Version' | awk '{print $NF}'
+  register: jdk_package_version
+  args:
+    creates: nothing # noqa 301
+
+- name: Get OpenJDK package release
+  shell: echo "{{ jdk_package_info.stdout }}" | grep 'Release' | awk '{print $NF}'
+  register: jdk_package_release
+  args:
+    creates: nothing # noqa 301
+
+- name: Get OpenJDK package architecture
+  shell: echo "{{ jdk_package_info.stdout }}" | grep 'Architecture' | awk '{print $NF}'
+  register: jdk_package_arch
+  args:
+    creates: nothing # noqa 301
+
+- name: Set default Java and JDK default
+  alternatives:
+    name: "{{ item.name }}"
+    path: "{{ item.path }}"
+  loop:
+    - name: java
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/jre/bin/java"
+    - name: javac
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/javac"
+    - name: jre_openjdk
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/jre"
+    - name: java_sdk_openjdk
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}"
   become: yes
