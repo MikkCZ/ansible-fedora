@@ -38,7 +38,7 @@
     - oh-my-zsh
     - terminal
     - firewall
-#    - flatpak-apps
+    - flatpak-apps
 #    - snap-apps
     - repo-apps
     - custom-apps

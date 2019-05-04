@@ -34,3 +34,10 @@
     state: present
     remote: flathub
     method: user
+
+- name: Install IDEA in Flatpak
+  flatpak:
+    name: com.jetbrains.IntelliJ-IDEA-Community
+    state: present
+    remote: flathub
+    method: user
