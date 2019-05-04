@@ -20,6 +20,7 @@
 - name: Install development files
   dnf:
     name:
+      - zlib-devel
       - openssl-devel
       - redhat-rpm-config
     state: present
