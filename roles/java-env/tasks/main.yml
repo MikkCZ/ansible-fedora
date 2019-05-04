@@ -62,3 +62,12 @@
     - name: java_sdk_openjdk
       path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
   become: yes
+
+- name: Hide OpenJDK icons
+  file:
+    path: "/usr/share/applications/{{ item }}"
+    state: absent
+  loop:
+    - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-jconsole.desktop"
+    - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-policytool.desktop"
+  become: yes

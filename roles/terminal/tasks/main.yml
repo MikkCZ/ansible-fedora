@@ -10,6 +10,12 @@
     state: present
   become: yes
 
+- name: Remove htop icon
+  file:
+    path: /usr/share/applications/htop.desktop
+    state: absent
+  become: yes
+
 - name: Install Tilix
   dnf:
     name: tilix
