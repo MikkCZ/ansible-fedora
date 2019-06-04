@@ -1,0 +1,6 @@
+---
+- name: Install Node.js
+  dnf:
+    name: nodejs
+    state: present
+  become: yes
