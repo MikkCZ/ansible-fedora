@@ -1,0 +1,8 @@
+---
+# https://www.rust-lang.org/learn/get-started
+- name: Install Rustup
+  shell: |
+    set -o pipefail
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+  args:
+    creates: "{{ ansible_env.HOME }}/.cargo/"

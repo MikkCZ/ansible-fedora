@@ -35,6 +35,7 @@
     - python-env
     - ruby-env
     - java-env
+    - rust-env
     - javascript-env
     - oh-my-zsh
     - terminal
