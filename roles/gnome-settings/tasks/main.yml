@@ -1,7 +1,7 @@
 ---
 - name: Copy wallpaper to home
   copy:
-    src: firefox-hero-big.jpg
+    src: Firefox-2019-Logo-Nightly.png
     dest: "{{ ansible_env.HOME }}/.wallpaper.jpg"
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
