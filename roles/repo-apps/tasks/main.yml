@@ -4,6 +4,7 @@
     name:
       - evolution
       - cheese
+      - gnome-boxes
       - gnome-contacts
       - gnome-documents
       - gnome-maps
@@ -35,4 +36,3 @@
     name: deja-dup
     state: present
   become: yes
-
