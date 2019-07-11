@@ -1,9 +1,16 @@
 ---
-- name: Add the flathub flatpak repository remote to the user installation
+- name: Add Flathub repository
   flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Add unofficial Firefox repository
+  flatpak_remote:
+    name: org.mozilla.FirefoxRepo
+    state: present
+    flatpakrepo_url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
     method: user
 
 #- name: Install Telegram and Slack
@@ -25,6 +32,20 @@
 - name: Install IDEA in Flatpak
   flatpak:
     name: com.jetbrains.IntelliJ-IDEA-Community
+    state: present
+    remote: flathub
+    method: user
+
+- name: Install Firefox Nightly in Flatpak
+  flatpak:
+    name: org.mozilla.FirefoxNightly
+    state: present
+    remote: org.mozilla.FirefoxRepo
+    method: user
+
+- name: Install media codecs for Firefox
+  flatpak:
+    name: org.freedesktop.Platform.ffmpeg
     state: present
     remote: flathub
     method: user
