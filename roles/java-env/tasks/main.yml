@@ -67,7 +67,7 @@
   file:
     path: "/usr/share/applications/{{ item }}"
     state: absent
-  loop:
+  with_items:
     - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-jconsole.desktop"
     - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-policytool.desktop"
   become: yes
