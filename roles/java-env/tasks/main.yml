@@ -10,8 +10,8 @@
     state: present
   become: yes
 
-- name: Get OpenJDK 1.8 package info
-  command: sh -c "LC_ALL=C dnf info java-1.8.0-openjdk --installed"
+- name: Get OpenJDK 11 package info
+  command: sh -c "LC_ALL=C dnf info java-11-openjdk --installed"
   register: jdk_package_info
   args:
     creates: nothing # noqa 301
@@ -54,11 +54,11 @@
     path: "{{ item.path }}"
   loop:
     - name: java
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/jre/bin/java" # noqa 204
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/java" # noqa 204
     - name: javac
       path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/javac" # noqa 204
     - name: jre_openjdk
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/jre" # noqa 204
+      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
     - name: java_sdk_openjdk
       path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
   become: yes
