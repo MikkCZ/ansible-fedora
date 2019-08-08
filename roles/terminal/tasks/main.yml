@@ -1,11 +1,14 @@
+
 ---
-- name: Install cli tools - vim, htop, xclip, thefuck
+- name: Install cli tools
   dnf:
     name:
       - vim
       - htop
       - sshfs
       - xclip
+      - cheat
+      - tldr
       - thefuck
     state: present
   become: yes
