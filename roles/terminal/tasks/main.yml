@@ -5,6 +5,7 @@
     name:
       - vim
       - htop
+      - jq
       - sshfs
       - xclip
       - cheat
