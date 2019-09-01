@@ -40,6 +40,7 @@
     - oh-my-zsh
     - terminal
     - firewall
+    - common-dev-env
     - flatpak-apps
 #    - snap-apps
     - repo-apps
