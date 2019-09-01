@@ -36,6 +36,13 @@
     remote: flathub
     method: user
 
+- name: Install PyCharm in Flatpak
+  flatpak:
+    name: com.jetbrains.PyCharm-Community
+    state: present
+    remote: flathub
+    method: user
+
 - name: Install Firefox Nightly in Flatpak
   flatpak:
     name: org.mozilla.FirefoxNightly
