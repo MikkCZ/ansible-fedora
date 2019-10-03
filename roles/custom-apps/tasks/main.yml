@@ -40,6 +40,6 @@
 
 - name: Atom
   dnf:
-    name: "https://atom-installer.github.com/v1.34.0/atom.x86_64.rpm"
+    name: "https://atom.io/download/rpm" # latest
     state: present
   become: yes
