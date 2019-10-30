@@ -68,6 +68,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
+  fzf
   git
   mercurial
   mvn

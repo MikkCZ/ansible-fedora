@@ -19,18 +19,30 @@
     creates: "{{ ansible_env.HOME }}/.oh-my-zsh/"
 
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-- name: Install zsh-autosuggestions plugin
+- name: Install or update zsh-autosuggestions plugin
   git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     version: master
 
 # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-- name: Install zsh-syntax-highlighting plugin
+- name: Install or update zsh-syntax-highlighting plugin
   git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     version: master
+
+# https://github.com/junegunn/fzf/blob/master/README.md#using-git
+- name: Clone fzf
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: "{{ ansible_env.HOME }}/.fzf"
+    version: master
+  register: fzf_git
+
+- name: Install or update sfzf
+  command: "{{ ansible_env.HOME }}/.fzf/install --bin --no-bash --no-zsh --no-fish"
+  when: fzf_git.changed # noqa 503
 
 - name: Create ZSH configuration file
   template:
