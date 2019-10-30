@@ -6,11 +6,11 @@
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
     method: user
 
-- name: Add unofficial Firefox repository
+- name: Add Fedora repository
   flatpak_remote:
-    name: org.mozilla.FirefoxRepo
+    name: fedora
     state: present
-    flatpakrepo_url: https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
+    flatpakrepo_url: oci+https://registry.fedoraproject.org
     method: user
 
 #- name: Install Telegram and Slack
@@ -43,20 +43,20 @@
     remote: flathub
     method: user
 
-- name: Install Firefox Nightly in Flatpak
+- name: Install Firefox in Flatpak
   flatpak:
-    name: org.mozilla.FirefoxNightly
+    name: org.mozilla.Firefox
     state: present
-    remote: org.mozilla.FirefoxRepo
+    remote: fedora
     method: user
 
-- name: Keep only one .desktop file for Firefox Nightly
+- name: Keep only one .desktop file for Firefox
   file:
     path: "{{ item }}"
     state: absent
   with_items:
-    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.FirefoxNightly/current/active/files/share/applications/org.mozilla.FirefoxNightly.desktop"
-    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.FirefoxNightly/current/active/export/share/applications/org.mozilla.FirefoxNightly.desktop"
+    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.Firefox/current/active/files/share/applications/org.mozilla.Firefox.desktop"
+    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.Firefox/current/active/export/share/applications/org.mozilla.Firefox.desktop"
 
 - name: Install media codecs for Firefox
   flatpak:
