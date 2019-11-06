@@ -1,6 +1,6 @@
 ---
 - name: Uninstall unused GNOME apps, Evolution, Cheese, Rhytmbox and Simple Scan
-  dnf:
+  package:
     name:
       - evolution
       - cheese
@@ -14,13 +14,13 @@
   become: yes
 
 - name: Install RPM Fusion free
-  dnf:
+  package:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm"
     state: present
   become: yes
 
 - name: Install media codecs
-  dnf:
+  package:
     name:
       - ffmpeg # for Firefox
       - gstreamer
@@ -32,7 +32,7 @@
   become: yes
 
 - name: Install Deja Dup
-  dnf:
+  package:
     name: deja-dup
     state: present
   become: yes

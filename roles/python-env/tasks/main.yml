@@ -1,6 +1,6 @@
 ---
 - name: Install Python development libraries
-  dnf:
+  package:
     name:
       - python3-devel
       - libffi-devel # required for Python builds (e.g. with pyenv)

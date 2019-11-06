@@ -1,6 +1,6 @@
 ---
 - name: Install Node.js
-  dnf:
+  package:
     name: nodejs
     state: present
   become: yes
@@ -16,7 +16,7 @@
   become: yes
 
 - name: Install Yarn
-  dnf:
+  package:
     name: yarn
     state: present
   become: yes

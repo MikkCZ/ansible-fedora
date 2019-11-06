@@ -1,6 +1,6 @@
 ---
 - name: Install printer driver and scanner software
-  dnf:
+  package:
     name:
       - hplip
       - xsane

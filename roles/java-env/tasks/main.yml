@@ -1,6 +1,6 @@
 ---
 - name: Install OpenJDKs and Maven
-  dnf:
+  package:
     name:
       - java-11-openjdk
       - java-11-openjdk-devel

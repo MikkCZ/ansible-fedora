@@ -1,6 +1,6 @@
 ---
 - name: Install ZSH
-  dnf:
+  package:
     name: zsh
     state: present
   become: yes

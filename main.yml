@@ -12,7 +12,7 @@
 
   pre_tasks:
     - name: Install ansible-lint
-      dnf:
+      package:
         name: python3-ansible-lint
         state: present
       become: yes
@@ -24,7 +24,7 @@
 
     # dconf module dependency, see https://docs.ansible.com/ansible/latest/modules/dconf_module.html#notes
     - name: Install Python psutil
-      dnf:
+      package:
         name: python3-psutil
         state: present
       become: yes

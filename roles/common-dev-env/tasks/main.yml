@@ -11,7 +11,7 @@
   become: yes
 
 - name: Install Docker
-  dnf:
+  package:
     name:
       - docker-ce
       - docker-ce-cli

@@ -26,7 +26,7 @@
     dest: "{{ ansible_env.HOME }}/.local/share/applications/"
 
 - name: Uninstall Firefox from distro repository
-  dnf:
+  package:
     name: firefox
     state: absent
   become: yes
@@ -39,7 +39,7 @@
     extra_args: --user
 
 - name: Atom
-  dnf:
+  package:
     name: "https://atom.io/download/rpm" # latest
     state: present
   become: yes

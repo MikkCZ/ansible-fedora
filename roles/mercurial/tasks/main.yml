@@ -1,6 +1,6 @@
 ---
 - name: Install mercurial
-  dnf:
+  package:
     name: mercurial
     state: present
   become: yes
