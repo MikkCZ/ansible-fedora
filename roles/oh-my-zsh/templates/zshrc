@@ -109,3 +109,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias xclip="xclip -selection c"
 eval "$(thefuck --alias)"
+
+alias restore-tmux='tmux ls && read tmux_session && tmux attach -t ${tmux_session:-default} || tmux new -s ${tmux_session:-default}'

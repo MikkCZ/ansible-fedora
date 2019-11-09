@@ -2,6 +2,7 @@
 - name: Install cli tools
   package:
     name:
+      - tmux
       - vim
       - htop
       - jq
@@ -18,6 +19,11 @@
     path: /usr/share/applications/htop.desktop
     state: absent
   become: yes
+
+- name: Configure tmux
+  copy:
+    src: tmux.conf
+    dest: "{{ ansible_env.HOME }}/.tmux.conf"
 
 - name: Install Tilix
   package:

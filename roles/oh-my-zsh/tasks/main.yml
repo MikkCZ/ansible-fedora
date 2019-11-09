@@ -46,8 +46,8 @@
 
 - name: Create ZSH configuration file
   template:
-    src: .zshrc
-    dest: "{{ ansible_env.HOME }}"
+    src: zshrc
+    dest: "{{ ansible_env.HOME }}/.zshrc"
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
     mode: 0600
