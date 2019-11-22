@@ -37,11 +37,6 @@
     state: absent
   become: yes
 
-- name: Ensure single Tilix instance only
-  dconf:
-    key: /com/gexperts/Tilix/new-instance-mode
-    value: "'focus-window'"
-
 - name: Set Tilix dark theme
   dconf:
     key: /com/gexperts/Tilix/theme-variant
@@ -62,15 +57,15 @@
     key: /com/gexperts/Tilix/enable-wide-handle
     value: "true"
 
-- name: Set Tilix as default temrinal
+- name: Set Tilix as default terminal
   dconf:
     key: /org/gnome/desktop/applications/terminal/exec
     value: "'tilix'"
 
-- name: Set Tilix default terminal to open in full screen
+- name: Set Tilix to open in full screen and focus existing window
   dconf:
     key: /org/gnome/desktop/applications/terminal/exec-arg
-    value: "'--maximize'"
+    value: "'--full-screen --focus-window'"
 
 - name: Set Tilix to open with Ctrl+Alt+T (prepare)
   dconf:
@@ -85,7 +80,7 @@
 - name: Set Tilix to open with Ctrl+Alt+T (command)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
-    value: "'tilix --maximize'"
+    value: "'tilix --full-screen --focus-window'"
 
 - name: Set Tilix to open with Ctrl+Alt+T (binding)
   dconf:
