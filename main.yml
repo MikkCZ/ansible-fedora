@@ -7,7 +7,7 @@
     system_user_full_name: Michal Stanke
     system_user_email: michal@stanke.cz
     system_user_gpg_key: E0079E8F
-    fedora_version: 30
+    fedora_version: 31
     locale: cs
 
   pre_tasks:
