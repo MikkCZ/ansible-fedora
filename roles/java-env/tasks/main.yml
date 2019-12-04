@@ -1,11 +1,19 @@
 ---
-- name: Install OpenJDKs and Maven
+- name: Install OpenJDK 11 and Maven
   package:
     name:
       - java-11-openjdk
       - java-11-openjdk-devel
       - maven
     state: present
+  become: yes
+
+- name: Uninstall OpenJDK 8
+  package:
+    name:
+      - java-1.8.0-openjdk
+      - java-1.8.0-openjdk-devel
+    state: absent
   become: yes
 
 - name: Get OpenJDK 11 package info
@@ -46,20 +54,20 @@
   args:
     creates: nothing # noqa 301
 
-- name: Set default Java and JDK default
-  alternatives:
-    name: "{{ item.name }}"
-    path: "{{ item.path }}"
-  loop:
-    - name: java
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/java" # noqa 204
-    - name: javac
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/javac" # noqa 204
-    - name: jre_openjdk
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
-    - name: java_sdk_openjdk
-      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
-  become: yes
+#- name: Set default Java and JDK default
+#  alternatives:
+#    name: "{{ item.name }}"
+#    path: "{{ item.path }}"
+#  loop:
+#    - name: java
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/java" # noqa 204
+#    - name: javac
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/javac" # noqa 204
+#    - name: jre_openjdk
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
+#    - name: java_sdk_openjdk
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
+#  become: yes
 
 - name: Hide OpenJDK icons
   file:
