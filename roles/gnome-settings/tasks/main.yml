@@ -40,6 +40,11 @@
     key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
     value: "true"
 
+- name: Alt+Tab (and above-Tab) on current workspace only
+  dconf:
+    key: /org/gnome/shell/app-switcher/current-workspace-only
+    value: "true"
+
 - name: Set touchpad tap as click
   dconf:
     key: /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click
