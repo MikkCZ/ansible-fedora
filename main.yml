@@ -21,6 +21,7 @@
       command: ansible-lint main.yml
       args:
         creates: nothing # noqa 301
+      changed_when: false
 
     # dconf module dependency, see https://docs.ansible.com/ansible/latest/modules/dconf_module.html#notes
     - name: Install Python psutil

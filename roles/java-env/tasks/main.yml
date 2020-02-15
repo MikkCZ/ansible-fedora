@@ -21,6 +21,7 @@
   register: jdk_package_info
   args:
     creates: nothing # noqa 301
+  changed_when: false
 
 - name: Get OpenJDK package name
   shell: |
@@ -29,6 +30,7 @@
   register: jdk_package_name
   args:
     creates: nothing # noqa 301
+  changed_when: false
 
 - name: Get OpenJDK package version
   shell: |
@@ -37,6 +39,7 @@
   register: jdk_package_version
   args:
     creates: nothing # noqa 301
+  changed_when: false
 
 - name: Get OpenJDK package release
   shell: |
@@ -45,6 +48,7 @@
   register: jdk_package_release
   args:
     creates: nothing # noqa 301
+  changed_when: false
 
 - name: Get OpenJDK package architecture
   shell: |
@@ -53,6 +57,7 @@
   register: jdk_package_arch
   args:
     creates: nothing # noqa 301
+  changed_when: false
 
 #- name: Set default Java and JDK default
 #  alternatives:
