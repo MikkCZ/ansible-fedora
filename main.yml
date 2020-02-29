@@ -8,6 +8,7 @@
     system_user_email: michal@stanke.cz
     system_user_gpg_key: E0079E8F
     fedora_version: 31
+    maven_version: 3.6.3
     locale: cs
 
   pre_tasks:

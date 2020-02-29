@@ -1,18 +1,40 @@
 ---
-- name: Install OpenJDK 11 and Maven
+- name: Install OpenJDK 11
   package:
     name:
       - java-11-openjdk
       - java-11-openjdk-devel
-      - maven
     state: present
   become: yes
+
+- name: "Create installation directory for Maven {{ maven_version }}"
+  file:
+    path: /opt/maven/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: "0755"
+  become: yes
+
+- name: "Extract Maven {{ maven_version }} tarball to installation directory"
+  unarchive:
+    src: "https://downloads.apache.org/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz"
+    dest: /opt/maven/
+    copy: no
+    creates: "/opt/maven/apache-maven-{{ maven_version }}/"
+
+- name: "Add Maven {{ maven_version }} to $PATH"
+  file:
+    src: "/opt/maven/apache-maven-{{ maven_version }}/bin/mvn"
+    dest: "{{ ansible_env.HOME }}/.local/bin/mvn"
+    state: link
 
 - name: Uninstall OpenJDK 8
   package:
     name:
       - java-1.8.0-openjdk
       - java-1.8.0-openjdk-devel
+      - maven
     state: absent
   become: yes
 
