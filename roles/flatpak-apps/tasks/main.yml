@@ -64,3 +64,10 @@
     state: present
     remote: flathub
     method: user
+
+- name: Install Spotify
+  flatpak:
+    name: com.spotify.Client
+    state: present
+    remote: flathub
+    method: user
