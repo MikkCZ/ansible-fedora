@@ -1,0 +1,106 @@
+---
+- name: OpenJDK 11
+  package:
+    name:
+      - java-11-openjdk
+      - java-11-openjdk-devel
+    state: present
+  become: yes
+
+- name: "Maven {{ maven_version }} - installation directory"
+  file:
+    path: /opt/maven/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+  become: yes
+
+- name: "Maven {{ maven_version }} - extract tarball to installation directory"
+  unarchive:
+    src: "https://downloads.apache.org/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz"
+    dest: /opt/maven/
+    copy: no
+    creates: "/opt/maven/apache-maven-{{ maven_version }}/"
+
+- name: "Maven {{ maven_version }} - add to $PATH"
+  file:
+    src: "/opt/maven/apache-maven-{{ maven_version }}/bin/mvn"
+    dest: "{{ ansible_env.HOME }}/.local/bin/mvn"
+    state: link
+
+- name: Uninstall OpenJDK 8
+  package:
+    name:
+      - java-1.8.0-openjdk
+      - java-1.8.0-openjdk-devel
+      - maven
+    state: absent
+  become: yes
+
+- name: OpenJDK 11 - package info
+  command: sh -c "LC_ALL=C dnf info java-11-openjdk --installed"
+  register: jdk_package_info
+  args:
+    creates: nothing # noqa 301
+  changed_when: false
+
+- name: OpenJDK - package name
+  shell: |
+    set -o pipefail
+    echo "{{ jdk_package_info.stdout }}" | grep 'Name' | awk '{print $NF}'
+  register: jdk_package_name
+  args:
+    creates: nothing # noqa 301
+  changed_when: false
+
+- name: OpenJDK - package version
+  shell: |
+    set -o pipefail
+    echo "{{ jdk_package_info.stdout }}" | grep 'Version' | awk '{print $NF}'
+  register: jdk_package_version
+  args:
+    creates: nothing # noqa 301
+  changed_when: false
+
+- name: OpenJDK - package release
+  shell: |
+    set -o pipefail
+    echo "{{ jdk_package_info.stdout }}" | grep 'Release' | awk '{print $NF}'
+  register: jdk_package_release
+  args:
+    creates: nothing # noqa 301
+  changed_when: false
+
+- name: OpenJDK - package architecture
+  shell: |
+    set -o pipefail
+    echo "{{ jdk_package_info.stdout }}" | grep 'Architecture' | awk '{print $NF}'
+  register: jdk_package_arch
+  args:
+    creates: nothing # noqa 301
+  changed_when: false
+
+#- name: OpenJDK - set default Java
+#  alternatives:
+#    name: "{{ item.name }}"
+#    path: "{{ item.path }}"
+#  loop:
+#    - name: java
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/java" # noqa 204
+#    - name: javac
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}/bin/javac" # noqa 204
+#    - name: jre_openjdk
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
+#    - name: java_sdk_openjdk
+#      path: "/usr/lib/jvm/{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}" # noqa 204
+#  become: yes
+
+- name: OpenJDK - hide shortcuts
+  file:
+    path: "/usr/share/applications/{{ item }}"
+    state: absent
+  with_items:
+    - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-jconsole.desktop"
+    - "{{ jdk_package_name.stdout }}-{{ jdk_package_version.stdout }}-{{ jdk_package_release.stdout }}.{{ jdk_package_arch.stdout }}-policytool.desktop"
+  become: yes

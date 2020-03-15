@@ -1,0 +1,63 @@
+---
+- name: Flatpak - Flathub repository
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Flatpak - Fedora repository
+  flatpak_remote:
+    name: fedora
+    state: present
+    flatpakrepo_url: oci+https://registry.fedoraproject.org
+    method: user
+
+- name: GIMP
+  flatpak:
+    name: org.gimp.GIMP
+    state: present
+    remote: flathub
+    method: user
+
+- name: IntelliJ IDEA
+  flatpak:
+    name: com.jetbrains.IntelliJ-IDEA-Community
+    state: present
+    remote: flathub
+    method: user
+
+- name: PyCharm
+  flatpak:
+    name: com.jetbrains.PyCharm-Community
+    state: present
+    remote: flathub
+    method: user
+
+- name: Firefox beta - install
+  flatpak:
+    name: https://flathub.org/beta-repo/appstream/org.mozilla.firefox.flatpakref
+    state: present
+    method: user
+
+- name: Firefox - media codecs
+  flatpak:
+    name: org.freedesktop.Platform.ffmpeg
+    state: present
+    remote: flathub
+    method: user
+
+- name: Keep only one .desktop file for Firefox
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.firefox/current/active/files/share/applications/org.mozilla.firefox.desktop"
+    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.firefox/current/active/export/share/applications/org.mozilla.firefox.desktop"
+
+- name: Spotify
+  flatpak:
+    name: com.spotify.Client
+    state: present
+    remote: flathub
+    method: user

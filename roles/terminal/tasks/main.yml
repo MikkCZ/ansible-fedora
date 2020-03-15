@@ -1,5 +1,5 @@
 ---
-- name: Install cli tools
+- name: cli tools
   package:
     name:
       - tmux
@@ -14,75 +14,75 @@
     state: present
   become: yes
 
-- name: Remove htop icon
+- name: htop - remove shortcut
   file:
     path: /usr/share/applications/htop.desktop
     state: absent
   become: yes
 
-- name: Configure tmux
+- name: tmux - configure
   copy:
     src: tmux.conf
     dest: "{{ ansible_env.HOME }}/.tmux.conf"
 
-- name: Install Tilix
+- name: Tilix - install
   package:
     name: tilix
     state: present
   become: yes
+
+- name: Tilix - default terminal
+  dconf:
+    key: /org/gnome/desktop/applications/terminal/exec
+    value: "'tilix'"
+
+- name: Tilix - dark theme
+  dconf:
+    key: /com/gexperts/Tilix/theme-variant
+    value: "'dark'"
+
+- name: Tilix - use tabs
+  dconf:
+    key: /com/gexperts/Tilix/use-tabs
+    value: "true"
+
+- name: Tilix - hide title for single tile
+  dconf:
+    key: /com/gexperts/Tilix/terminal-title-show-when-single
+    value: "false"
+
+- name: Tilix - wide separators
+  dconf:
+    key: /com/gexperts/Tilix/enable-wide-handle
+    value: "true"
+
+- name: Tilix - open in full screen and focus existing window
+  dconf:
+    key: /org/gnome/desktop/applications/terminal/exec-arg
+    value: "'--full-screen --focus-window'"
+
+- name: Tilix - open with Ctrl+Alt+T (prepare)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+
+- name: Tilix - open with Ctrl+Alt+T (name)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
+    value: "'Tilix'"
+
+- name: Tilix - open with Ctrl+Alt+T (command)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
+    value: "'tilix --full-screen --focus-window'"
+
+- name: Tilix - open with Ctrl+Alt+T (binding)
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
+    value: "'<Primary><Alt>t'"
 
 - name: Uninstall GNOME Terminal
   package:
     name: gnome-terminal
     state: absent
   become: yes
-
-- name: Set Tilix dark theme
-  dconf:
-    key: /com/gexperts/Tilix/theme-variant
-    value: "'dark'"
-
-- name: Set Tilix to use tabs
-  dconf:
-    key: /com/gexperts/Tilix/use-tabs
-    value: "true"
-
-- name: Set Tilix to hide title for single tile
-  dconf:
-    key: /com/gexperts/Tilix/terminal-title-show-when-single
-    value: "false"
-
-- name: Set Tilix wide separators
-  dconf:
-    key: /com/gexperts/Tilix/enable-wide-handle
-    value: "true"
-
-- name: Set Tilix as default terminal
-  dconf:
-    key: /org/gnome/desktop/applications/terminal/exec
-    value: "'tilix'"
-
-- name: Set Tilix to open in full screen and focus existing window
-  dconf:
-    key: /org/gnome/desktop/applications/terminal/exec-arg
-    value: "'--full-screen --focus-window'"
-
-- name: Set Tilix to open with Ctrl+Alt+T (prepare)
-  dconf:
-    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
-    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-
-- name: Set Tilix to open with Ctrl+Alt+T (name)
-  dconf:
-    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
-    value: "'Tilix'"
-
-- name: Set Tilix to open with Ctrl+Alt+T (command)
-  dconf:
-    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
-    value: "'tilix --full-screen --focus-window'"
-
-- name: Set Tilix to open with Ctrl+Alt+T (binding)
-  dconf:
-    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
-    value: "'<Primary><Alt>t'"

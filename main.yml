@@ -4,48 +4,49 @@
   connection: local
   vars:
     system_user: michal
-    system_user_full_name: Michal Stanke
-    system_user_email: michal@stanke.cz
-    system_user_gpg_key: E0079E8F
-    fedora_version: 31
-    maven_version: 3.6.3
-    locale: cs
+    system_user_full_name: Michal Stanke # gnome-settings
+    system_user_email: michal@stanke.cz # gnome-settings
+    git_user_full_name: Michal Stanke # developer/common
+    git_user_email: michal@stanke.cz # developer/common
+    git_user_signingkey: E0079E8F # developer/common; GPG key
+    hg_user_full_name: Michal Stanke # developer/common
+    hg_user_email: mstanke@mozilla.cz # developer/common
+    maven_version: 3.6.3 # developer/java
+    fedora_version: 31 # apps/repo
+    firefox_locale: cs # apps/custom
 
   pre_tasks:
-    - name: Install ansible-lint
+    - name: ansible-lint - install
       package:
         name: python3-ansible-lint
         state: present
       become: yes
 
-    - name: Run ansible-lint
+    - name: ansible-lint - run
       command: ansible-lint main.yml
       args:
         creates: nothing # noqa 301
       changed_when: false
 
     # dconf module dependency, see https://docs.ansible.com/ansible/latest/modules/dconf_module.html#notes
-    - name: Install Python psutil
+    - name: Python psutil
       package:
         name: python3-psutil
         state: present
       become: yes
 
   roles:
-    - git
-    - mercurial
-    - python-env
-    - ruby-env
-    - java-env
-    - rust-env
-    - javascript-env
+    - firewall
+    - gnome-settings
+    - developer/common
+    - developer/python
+    - developer/ruby
+    - developer/java
+    - developer/rust
+    - developer/javascript
     - oh-my-zsh
     - terminal
-    - firewall
-    - common-dev-env
-    - flatpak-apps
-#    - snap-apps
-    - repo-apps
-    - custom-apps
-    - gnome-settings
+    - apps/flatpak
+    - apps/repo
+    - apps/custom
     - print

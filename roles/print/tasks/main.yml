@@ -1,5 +1,5 @@
 ---
-- name: Install printer driver and scanner software
+- name: Printer driver and scanner software
   package:
     name:
       - hplip
@@ -8,16 +8,16 @@
   become: yes
   notify: "printer install instructions"
 
-#- name: Create directory to download printer driver
+#- name: Printer driver - create directory
 #  file:
 #    path: "{{ ansible_env.HOME }}/Downloads/"
 #    state: directory
 #    owner: "{{ system_user }}"
 #    group: "{{ system_user }}"
-#    mode: "0700"
+#    mode: 0700
 #
 # https://support.hp.com/cz-cs/drivers/selfservice/samsung-xpress-sl-m2070-laser-multifunction-printer-series/16450377/model/16450387
-#- name: Download Samsung Xpress SL-M2070W printer driver
+#- name: Samsung Xpress SL-M2070W printer driver - download
 #  unarchive:
 #    src: "https://ftp.hp.com/pub/softlib/software13/printers/SS/SL-M4580FX/uld_V1.00.39_01.17.tar.gz"
 #    dest: "{{ ansible_env.HOME }}/Downloads/"

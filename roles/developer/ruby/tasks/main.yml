@@ -1,0 +1,27 @@
+---
+- name: Ruby - Bundler, RubyGems and Ruby development libraries
+  package:
+    name:
+      - ruby
+      - rubygem-bundler
+      - rubygems
+      - ruby-devel
+    state: present
+  become: yes
+
+- name: GCC
+  package:
+    name:
+      - gcc
+      - gcc-c++
+    state: present
+  become: yes
+
+- name: Ruby - more development libraries
+  package:
+    name:
+      - zlib-devel
+      - openssl-devel
+      - redhat-rpm-config
+    state: present
+  become: yes

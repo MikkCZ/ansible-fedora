@@ -1,11 +1,11 @@
 ---
-- name: Install ZSH
+- name: ZSH - install
   package:
     name: zsh
     state: present
   become: yes
 
-- name: Set ZSH as default shell
+- name: ZSH - set as default shell
   user:
     name: "{{ system_user }}"
     shell: /usr/bin/zsh
@@ -13,38 +13,38 @@
   notify: "shell change message"
 
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/README.md
-- name: Install Oh My Zsh
+- name: Oh My Zsh - install
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   args:
     creates: "{{ ansible_env.HOME }}/.oh-my-zsh/"
 
 # https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
-- name: Install or update zsh-autosuggestions plugin
+- name: Oh My Zsh - install or update zsh-autosuggestions plugin
   git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
     version: master
 
 # https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
-- name: Install or update zsh-syntax-highlighting plugin
+- name: Oh My Zsh - install or update zsh-syntax-highlighting plugin
   git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting
     dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
     version: master
 
 # https://github.com/junegunn/fzf/blob/master/README.md#using-git
-- name: Clone fzf
+- name: fzf - clone
   git:
     repo: https://github.com/junegunn/fzf
     dest: "{{ ansible_env.HOME }}/.fzf"
     version: master
   register: fzf_git
 
-- name: Install or update sfzf
+- name: fzf - install or update
   command: "{{ ansible_env.HOME }}/.fzf/install --bin --no-bash --no-zsh --no-fish"
   when: fzf_git.changed # noqa 503
 
-- name: Create ZSH configuration file
+- name: ZSH - configuration file
   template:
     src: zshrc
     dest: "{{ ansible_env.HOME }}/.zshrc"

@@ -1,0 +1,76 @@
+---
+- name: Firefox Nightly - installation directory
+  file:
+    path: /opt/firefox/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+  become: yes
+
+- name: Firefox Nightly - extract tarball to installation directory
+  unarchive:
+    src: "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang={{ firefox_locale }}"
+    dest: /opt/firefox/
+    copy: no
+    creates: /opt/firefox/firefox
+
+- name: Firefox Nightly - shortcut logo
+  copy:
+    src: firefox-logo-nightly.svg
+    dest: /opt/firefox/
+
+- name: Firefox Nightly - shortcut
+  copy:
+    src: nightly.desktop
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+
+- name: mozregression
+  pip:
+    name: mozregression
+    state: present
+    extra_args: --user
+
+- name: Uninstall Firefox from distro repository
+  package:
+    name: firefox
+    state: absent
+  become: yes
+
+# https://netcologne.dl.sourceforge.net/project/freemind/freemind/1.0.1/freemind-bin-max-1.0.1.zip
+- name: FreeMind - installation directory
+  file:
+    path: /opt/freemind/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+  become: yes
+
+- name: FreeMind - extract archive to installation directory
+  unarchive:
+    src: https://netcologne.dl.sourceforge.net/project/freemind/freemind/1.0.1/freemind-bin-max-1.0.1.zip
+    dest: /opt/freemind/
+    copy: no
+    creates: /opt/freemind/freemind.sh
+
+- name: FreeMind - executable run script
+  file:
+    path: /opt/freemind/freemind.sh
+    mode: 0744
+
+- name: FreeMind - shortcut logo
+  copy:
+    src: freemind-logo.png
+    dest: /opt/freemind/
+
+- name: FreeMind - shortcut
+  copy:
+    src: freemind.desktop
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+
+- name: Atom
+  package:
+    name: "https://atom.io/download/rpm" # latest
+    state: present
+  become: yes

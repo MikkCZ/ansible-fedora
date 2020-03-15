@@ -1,5 +1,5 @@
 ---
-- name: Copy wallpaper to home
+- name: User - copy wallpaper to home
   copy:
     src: Firefox-2019-Logo-Nightly.png
     dest: "{{ ansible_env.HOME }}/.wallpaper.jpg"
@@ -7,17 +7,23 @@
     group: "{{ system_user }}"
     mode: 0640
 
-- name: Set wallpaper
+- name: User - configure wallpaper
   dconf:
     key: /org/gnome/desktop/background/picture-uri
     value: "'file://{{ ansible_env.HOME }}/.wallpaper.jpg'"
 
-- name: Set user profile picture
+- name: User - set full name
+  user:
+    name: "{{ system_user }}"
+    comment: "{{ system_user_full_name }}"
+  become: yes
+
+- name: User - profile picture
   get_url:
     url: "https://www.gravatar.com/avatar/{{ system_user_email | hash('md5') }}?s=192"
     dest: "{{ ansible_env.HOME }}/.face"
 
-- name: Set automatic login
+- name: User - automatic login
   blockinfile:
     path: /etc/gdm/custom.conf
     insertafter: "^\\[daemon\\]$"
@@ -35,7 +41,7 @@
   become: yes
   notify: "lock screen message"
 
-- name: Enable night light (red shift)
+- name: Night light (red shift)
   dconf:
     key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
     value: "true"
@@ -45,13 +51,13 @@
     key: /org/gnome/shell/app-switcher/current-workspace-only
     value: "true"
 
-- name: Set touchpad tap as click
+- name: Touchpad tap as click
   dconf:
     key: /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click
     value: "true"
   notify: "touchpad change message"
 
-- name: Set dash favourite applications
+- name: Dash favourite applications
   dconf:
     key: /org/gnome/shell/favorite-apps
     value: "['nightly.desktop', 'org.gnome.Nautilus.desktop', 'com.gexperts.Tilix.desktop']"
@@ -71,7 +77,7 @@
     key: /org/gtk/settings/file-chooser/sort-directories-first
     value: "true"
 
-- name: Disable GNOME extensions
+- name: GNOME extensions - disable
   dconf:
     key: /org/gnome/shell/disable-user-extensions
     value: "true"
