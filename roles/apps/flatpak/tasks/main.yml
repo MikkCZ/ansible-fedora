@@ -64,6 +64,13 @@
     remote: flathub
     method: user
 
+- name: Visual Studio Code
+  flatpak:
+    name: com.visualstudio.code.oss
+    state: present
+    remote: flathub
+    method: user
+
 - name: Firefox beta - install
   flatpak:
     name: https://flathub.org/beta-repo/appstream/org.mozilla.firefox.flatpakref
