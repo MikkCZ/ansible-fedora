@@ -51,3 +51,34 @@
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
     mode: 0600
+
+- name: tmux - install
+  package:
+    name: tmux
+    state: present
+  become: yes
+
+- name: tmux - configuration file
+  copy:
+    src: tmux.conf
+    dest: "{{ ansible_env.HOME }}/.tmux.conf"
+
+- name: cli tools
+  package:
+    name:
+      - vim
+      - htop
+      - jq
+      - sshfs
+      - xclip
+      - cheat
+      - tldr
+      - thefuck
+    state: present
+  become: yes
+
+- name: htop - remove shortcut
+  file:
+    path: /usr/share/applications/htop.desktop
+    state: absent
+  become: yes
