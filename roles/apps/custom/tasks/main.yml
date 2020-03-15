@@ -68,9 +68,3 @@
   copy:
     src: freemind.desktop
     dest: "{{ ansible_env.HOME }}/.local/share/applications/"
-
-- name: Atom
-  package:
-    name: "https://atom.io/download/rpm" # latest
-    state: present
-  become: yes

@@ -116,3 +116,6 @@ alias restore-tmux='tmux ls && read tmux_session && tmux attach -t ${tmux_sessio
 if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then
   restore-tmux
 fi
+
+# aliases for Flatpak applications
+alias atom='flatpak run io.atom.Atom'

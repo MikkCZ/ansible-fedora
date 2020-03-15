@@ -34,6 +34,13 @@
     remote: flathub
     method: user
 
+- name: Atom
+  flatpak:
+    name: io.atom.Atom
+    state: present
+    remote: flathub
+    method: user
+
 - name: Firefox beta - install
   flatpak:
     name: https://flathub.org/beta-repo/appstream/org.mozilla.firefox.flatpakref
