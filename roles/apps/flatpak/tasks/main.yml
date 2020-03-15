@@ -13,6 +13,29 @@
     flatpakrepo_url: oci+https://registry.fedoraproject.org
     method: user
 
+- name: Deja Dup - install
+  flatpak:
+    name: org.gnome.DejaDup
+    state: present
+    remote: flathub
+    method: user
+
+- name: Deja Dup - configuration directory
+  file:
+    path: "{{ ansible_env.HOME }}/.var/app/org.gnome.DejaDup/config/glib-2.0/settings/"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0700
+
+- name: Deja Dup - configuration file
+  template:
+    src: deja-dup-keyfile
+    dest: "{{ ansible_env.HOME }}/.var/app/org.gnome.DejaDup/config/glib-2.0/settings/keyfile"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0600
+
 - name: GIMP
   flatpak:
     name: org.gimp.GIMP

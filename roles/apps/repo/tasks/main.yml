@@ -13,12 +13,6 @@
     state: absent
   become: yes
 
-- name: Deja Dup
-  package:
-    name: deja-dup
-    state: present
-  become: yes
-
 - name: RPM Fusion free
   package:
     name: "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ fedora_version }}.noarch.rpm"
