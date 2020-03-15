@@ -31,6 +31,38 @@
     state: absent
   become: yes
 
+# https://netcologne.dl.sourceforge.net/project/freemind/freemind/1.0.1/freemind-bin-max-1.0.1.zip
+- name: Create FreeMind installation directory
+  file:
+    path: /opt/freemind/
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: "0755"
+  become: yes
+
+- name: Extract FreeMind archive to installation directory
+  unarchive:
+    src: https://netcologne.dl.sourceforge.net/project/freemind/freemind/1.0.1/freemind-bin-max-1.0.1.zip
+    dest: /opt/freemind/
+    copy: no
+    creates: /opt/freemind/freemind.sh
+
+- name: Make FreeMind run script executable
+  file:
+    path: /opt/freemind/freemind.sh
+    mode: 0744
+
+- name: Prepare FreeMind logo for shortcut
+  copy:
+    src: freemind-logo.png
+    dest: /opt/freemind/
+
+- name: Create shortcut for FreeMind
+  copy:
+    src: freemind.desktop
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+
 - name: mozregression
   pip:
     name: mozregression
