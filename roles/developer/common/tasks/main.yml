@@ -69,6 +69,14 @@
     group: "{{ system_user }}"
     mode: 0600
 
+- name: Fedora Toolbox
+  package:
+    name:
+      - toolbox
+      - podman
+    state: present
+  become: yes
+
 # https://docs.docker.com/install/linux/docker-ce/fedora/
 - name: Docker - yum repository
   yum_repository:

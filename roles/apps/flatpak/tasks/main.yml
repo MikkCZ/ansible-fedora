@@ -36,6 +36,20 @@
     group: "{{ system_user }}"
     mode: 0600
 
+- name: Riot
+  flatpak:
+    name: im.riot.Riot
+    state: present
+    remote: flathub
+    method: user
+
+- name: Fractal
+  flatpak:
+    name: org.gnome.Fractal
+    state: present
+    remote: flathub
+    method: user
+
 - name: GIMP
   flatpak:
     name: org.gimp.GIMP

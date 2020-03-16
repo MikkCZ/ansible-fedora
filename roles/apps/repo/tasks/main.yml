@@ -61,6 +61,27 @@
     state: absent
   become: yes
 
+- name: Install used GNOME apps
+  package:
+    name:
+      - baobab # Disk usage analyzer
+      - eog # Eye of GNOME
+      - evince # PDF
+      - file-roller # archives
+      - gedit # text editor
+      - gnome-calculator
+      - gnome-calendar
+      - gnome-clocks
+      - gnome-characters
+      - gnome-photos
+      - gnome-screenshot
+      - gnome-software
+      - gnome-system-monitor
+      - gnome-weather
+      - nautilus # file explorer
+    state: present
+  become: yes
+
 - name: Uninstall unused GNOME apps, Evolution, Cheese, Rhytmbox and Simple Scan
   package:
     name:
