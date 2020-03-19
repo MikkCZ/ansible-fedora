@@ -82,3 +82,11 @@
     path: /usr/share/applications/htop.desktop
     state: absent
   become: yes
+
+- name: system utilities
+  package:
+    name:
+      - fuse-exfat
+      - exfat-utils
+    state: present
+  become: yes
