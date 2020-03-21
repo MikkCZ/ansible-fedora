@@ -1,65 +1,65 @@
 ---
-- name: Tilix - install
+- name: GNOME Terminal - install
   package:
-    name: tilix
+    name: gnome-terminal
     state: present
   become: yes
 
-- name: Tilix - dark theme
+- name: Run process once or notify - directory
+  file:
+    path: "{{ ansible_env.HOME }}/bin/"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+
+- name: Run process once or notify - script
+  copy:
+    src: run-process-once-or-notify.sh
+    dest: "{{ ansible_env.HOME }}/bin/"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+
+- name: GNOME Terminal - dark theme
   dconf:
-    key: /com/gexperts/Tilix/theme-variant
+    key: /org/gnome/terminal/legacy/theme-variant
     value: "'dark'"
 
-- name: Tilix - use tabs
+- name: GNOME Terminal - use tabs
   dconf:
-    key: /com/gexperts/Tilix/use-tabs
-    value: "true"
+    key: /org/gnome/terminal/legacy/new-terminal-mode
+    value: "'tab'"
 
-- name: Tilix - hide title for single tile
-  dconf:
-    key: /com/gexperts/Tilix/terminal-title-show-when-single
-    value: "false"
-
-- name: Tilix - wide separators
-  dconf:
-    key: /com/gexperts/Tilix/enable-wide-handle
-    value: "true"
-
-- name: Tilix - default terminal
+- name: GNOME Terminal - default terminal open once
   dconf:
     key: /org/gnome/desktop/applications/terminal/exec
-    value: "'tilix'"
+    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify.sh'"
 
-- name: Tilix - open in full screen and focus existing window
+- name: GNOME Terminal - default terminal on full screen
   dconf:
     key: /org/gnome/desktop/applications/terminal/exec-arg
-    value: "'--full-screen --focus-window'"
+    value: "'gnome-terminal --full-screen --wait'"
 
-- name: Tilix - open with Ctrl+Alt+T (prepare)
+- name: GNOME Terminal - open with Ctrl+Alt+T (prepare)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
     value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
 
-- name: Tilix - open with Ctrl+Alt+T (name)
+- name: GNOME Terminal - open with Ctrl+Alt+T (name)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name
-    value: "'Tilix'"
+    value: "'GNOME Terminal'"
 
-- name: Tilix - open with Ctrl+Alt+T (command)
+- name: GNOME Terminal - open with Ctrl+Alt+T (command)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
-    value: "'tilix --full-screen --focus-window'"
+    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify.sh gnome-terminal --full-screen --wait'"
 
-- name: Tilix - open with Ctrl+Alt+T (binding)
+- name: GNOME Terminal - open with Ctrl+Alt+T (binding)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding
     value: "'<Primary><Alt>t'"
-
-- name: Uninstall GNOME Terminal
-  package:
-    name: gnome-terminal
-    state: absent
-  become: yes
 
 - name: Install used GNOME apps
   package:
