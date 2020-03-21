@@ -2,7 +2,7 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
 
 if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then # shell
-  restore-tmux
+  restore-tmux && exit
 fi
 
 # Path to your oh-my-zsh installation.
