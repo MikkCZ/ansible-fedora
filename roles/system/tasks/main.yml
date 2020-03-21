@@ -60,7 +60,7 @@
 - name: Dash favourite applications
   dconf:
     key: /org/gnome/shell/favorite-apps
-    value: "['nightly.desktop', 'org.gnome.Nautilus.desktop', 'com.gexperts.Tilix.desktop']"
+    value: "['nightly.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop']"
 
 - name: Nautilus - default view as list
   dconf:
