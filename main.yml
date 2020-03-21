@@ -37,7 +37,7 @@
 
   roles:
     - firewall
-    - gnome-settings
+    - system
     - developer/common
     - developer/python
     - developer/ruby

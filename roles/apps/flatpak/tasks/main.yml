@@ -84,12 +84,23 @@
     remote: flathub
     method: user
 
-- name: Atom
+- name: Atom - install
   flatpak:
     name: io.atom.Atom
     state: present
     remote: flathub
     method: user
+
+- name: Atom - alias
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/bin/atom"
+    create: yes
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+    marker: "#{mark}"
+    marker_begin: "!/bin/sh"
+    block: "flatpak run io.atom.Atom $@"
 
 - name: Visual Studio Code
   flatpak:

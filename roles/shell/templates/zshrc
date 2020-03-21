@@ -1,8 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then # shell
+  restore-tmux
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="{{ ansible_env.HOME }}/.oh-my-zsh"
@@ -107,15 +108,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias xclip="xclip -selection c"
-eval "$(thefuck --alias)"
 
-export JAVA_HOME="/usr/lib/jvm/java-11/"
+eval "$(pyenv init -)" # developer/python
+eval "$(pyenv virtualenv-init -)" # developer/python
 
-alias restore-tmux='tmux ls && read tmux_session && tmux attach -t ${tmux_session:-default} && exit || tmux new -s ${tmux_session:-default} && exit'
-if [[ $- == *i* ]] && [[ -z "$TMUX" ]]; then
-  restore-tmux
-fi
+export JAVA_HOME="/usr/lib/jvm/java-11/" # developer/java
 
-# aliases for Flatpak applications
-alias atom='flatpak run io.atom.Atom'
+eval "$(thefuck --alias)" # shell

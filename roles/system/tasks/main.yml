@@ -81,3 +81,11 @@
   dconf:
     key: /org/gnome/shell/disable-user-extensions
     value: "true"
+
+- name: exFAT support
+  package:
+    name:
+      - fuse-exfat
+      - exfat-utils
+    state: present
+  become: yes

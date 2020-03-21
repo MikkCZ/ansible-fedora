@@ -1,25 +1,17 @@
 ---
+- name: Custom tools - run process once or notify
+  copy:
+    src: run-process-once-or-notify.sh
+    dest: "{{ ansible_env.HOME }}/bin/run-process-once-or-notify"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+
 - name: GNOME Terminal - install
   package:
     name: gnome-terminal
     state: present
   become: yes
-
-- name: Run process once or notify - directory
-  file:
-    path: "{{ ansible_env.HOME }}/bin/"
-    state: directory
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
-    mode: 0755
-
-- name: Run process once or notify - script
-  copy:
-    src: run-process-once-or-notify.sh
-    dest: "{{ ansible_env.HOME }}/bin/"
-    owner: "{{ system_user }}"
-    group: "{{ system_user }}"
-    mode: 0740
 
 - name: GNOME Terminal - dark theme
   dconf:
@@ -34,7 +26,7 @@
 - name: GNOME Terminal - default terminal open once
   dconf:
     key: /org/gnome/desktop/applications/terminal/exec
-    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify.sh'"
+    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify'"
 
 - name: GNOME Terminal - default terminal on full screen
   dconf:
@@ -54,7 +46,7 @@
 - name: GNOME Terminal - open with Ctrl+Alt+T (command)
   dconf:
     key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command
-    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify.sh gnome-terminal --full-screen --wait'"
+    value: "'{{ ansible_env.HOME }}/bin/run-process-once-or-notify gnome-terminal --full-screen --wait'"
 
 - name: GNOME Terminal - open with Ctrl+Alt+T (binding)
   dconf:

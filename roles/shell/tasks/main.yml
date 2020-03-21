@@ -1,4 +1,12 @@
 ---
+- name: Custom tools - directory
+  file:
+    path: "{{ ansible_env.HOME }}/bin/"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+
 - name: ZSH - install
   package:
     name: zsh
@@ -88,6 +96,14 @@
     group: "{{ system_user }}"
     mode: 0600
 
+- name: Custom tools - restore tmux
+  copy:
+    src: restore-tmux.sh
+    dest: "{{ ansible_env.HOME }}/bin/restore-tmux"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+
 - name: cli tools
   package:
     name:
@@ -108,10 +124,24 @@
     state: absent
   become: yes
 
-- name: system utilities
-  package:
-    name:
-      - fuse-exfat
-      - exfat-utils
-    state: present
-  become: yes
+- name: Custom tools - ctrl-c
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/bin/ctrl-c"
+    create: yes
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+    marker: "#{mark}"
+    marker_begin: "!/bin/sh"
+    block: "cat /dev/stdin | xclip -selection c -i"
+
+- name: Custom tools - ctrl-v
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/bin/ctrl-v"
+    create: yes
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0740
+    marker: "#{mark}"
+    marker_begin: "!/bin/sh"
+    block: "xclip -selection c -o > /dev/stdout"
