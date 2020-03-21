@@ -44,7 +44,7 @@
     - developer/java
     - developer/rust
     - developer/javascript
-    - oh-my-zsh
+    - shell
     - apps/flatpak
     - apps/repo
     - apps/custom

@@ -58,10 +58,35 @@
     state: present
   become: yes
 
+- name: tmux - plugins folder
+  file:
+    path: "{{ ansible_env.HOME }}/.tmux/"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0755
+
+# https://github.com/tmux-plugins/tmux-resurrect/blob/master/README.md
+- name: tmux - install or update tmux-resurrect plugin
+  git:
+    repo: https://github.com/tmux-plugins/tmux-resurrect
+    dest: "{{ ansible_env.HOME }}/.tmux/tmux-resurrect"
+    version: master
+
+# https://github.com/tmux-plugins/tmux-continuum/blob/master/README.md
+- name: tmux - install or update tmux-continuum plugin
+  git:
+    repo: https://github.com/tmux-plugins/tmux-continuum
+    dest: "{{ ansible_env.HOME }}/.tmux/tmux-continuum"
+    version: master
+
 - name: tmux - configuration file
-  copy:
+  template:
     src: tmux.conf
     dest: "{{ ansible_env.HOME }}/.tmux.conf"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0600
 
 - name: cli tools
   package:
