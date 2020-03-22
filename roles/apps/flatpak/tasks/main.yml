@@ -122,14 +122,6 @@
     remote: flathub
     method: user
 
-- name: Keep only one .desktop file for Firefox
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.firefox/current/active/files/share/applications/org.mozilla.firefox.desktop"
-    - "{{ ansible_env.HOME }}/.local/share/flatpak/app/org.mozilla.firefox/current/active/export/share/applications/org.mozilla.firefox.desktop"
-
 - name: Spotify
   flatpak:
     name: com.spotify.Client
