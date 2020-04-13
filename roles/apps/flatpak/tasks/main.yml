@@ -109,10 +109,11 @@
     remote: flathub
     method: user
 
-- name: Firefox beta - install
+- name: Firefox - install
   flatpak:
-    name: https://flathub.org/beta-repo/appstream/org.mozilla.firefox.flatpakref
+    name: org.mozilla.firefox
     state: present
+    remote: flathub
     method: user
 
 - name: Firefox - media codecs
