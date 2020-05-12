@@ -12,7 +12,7 @@
     hg_user_full_name: Michal Stanke # developer/common
     hg_user_email: mstanke@mozilla.cz # developer/common
     maven_version: 3.6.3 # developer/java
-    fedora_version: 31 # apps/repo
+    fedora_version: 32 # apps/repo
     firefox_locale: cs # apps/custom
 
   pre_tasks:
