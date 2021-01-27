@@ -17,6 +17,12 @@
     value: "{{ git_user_full_name }}"
     scope: global
 
+- name: git - pull rebase
+  git_config:
+    name: "pull.rebase"
+    value: "true"
+    scope: global
+
 - name: git - push default
   git_config:
     name: "push.default"

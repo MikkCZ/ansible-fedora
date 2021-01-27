@@ -8,7 +8,7 @@
     mode: 0755
   become: yes
 
-- name: Firefox Nightly - extract tarball to installation directory
+- name: Firefox Nightly - extract tarball to installation directory # noqa 208
   unarchive:
     src: "https://download.mozilla.org/?product=firefox-nightly-latest-ssl&os=linux64&lang={{ firefox_locale }}"
     dest: /opt/firefox/
@@ -19,11 +19,13 @@
   copy:
     src: firefox-logo-nightly.svg
     dest: /opt/firefox/
+    mode: preserve
 
 - name: Firefox Nightly - shortcut
   copy:
     src: nightly.desktop
     dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+    mode: preserve
 
 - name: mozregression
   pip:
@@ -47,7 +49,7 @@
     mode: 0755
   become: yes
 
-- name: FreeMind - extract archive to installation directory
+- name: FreeMind - extract archive to installation directory # noqa 208
   unarchive:
     src: https://netcologne.dl.sourceforge.net/project/freemind/freemind/1.0.1/freemind-bin-max-1.0.1.zip
     dest: /opt/freemind/
@@ -63,8 +65,10 @@
   copy:
     src: freemind-logo.png
     dest: /opt/freemind/
+    mode: preserve
 
 - name: FreeMind - shortcut
   copy:
     src: freemind.desktop
     dest: "{{ ansible_env.HOME }}/.local/share/applications/"
+    mode: preserve

@@ -16,7 +16,7 @@
     mode: 0755
   become: yes
 
-- name: "Maven {{ maven_version }} - extract tarball to installation directory"
+- name: "Maven {{ maven_version }} - extract tarball to installation directory" # noqa 208
   unarchive:
     src: "https://downloads.apache.org/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz"
     dest: /opt/maven/

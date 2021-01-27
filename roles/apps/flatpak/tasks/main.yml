@@ -32,6 +32,7 @@
   blockinfile:
     path: "{{ ansible_env.HOME }}/.var/app/org.gnome.DejaDup/config/glib-2.0/settings/keyfile"
     create: yes
+    mode: 0600
     block: |
       [org/gnome/deja-dup]
       backend='drive'
@@ -59,6 +60,13 @@
 - name: Fractal
   flatpak:
     name: org.gnome.Fractal
+    state: present
+    remote: flathub
+    method: user
+
+- name: Joplin
+  flatpak:
+    name: net.cozic.joplin_desktop
     state: present
     remote: flathub
     method: user
