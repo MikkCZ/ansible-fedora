@@ -112,7 +112,7 @@
 
 - name: Visual Studio Code
   flatpak:
-    name: com.visualstudio.code.oss
+    name: com.visualstudio.code-oss
     state: present
     remote: flathub
     method: user
