@@ -41,6 +41,11 @@
   become: yes
   notify: "lock screen message"
 
+- name: Dark theme for apps
+  dconf:
+    key: /org/gnome/desktop/interface/gtk-theme
+    value: "'Adwaita-dark'"
+
 - name: Night light (red shift)
   dconf:
     key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
